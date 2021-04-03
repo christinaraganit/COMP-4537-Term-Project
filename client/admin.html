@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <label for="name">Name of Bakery</label>
+      <input id="name" />
+
+      <label for="location">Location of Bakery</label>
+      <input id="location" />
+
+      <label for="manager">Manager of Bakery</label>
+      <input id="manager" />
+
+      <label for="description">Description of Bakery</label>
+      <input id="description" />
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="
+            postBakery(
+                document.getElementById('name').value,
+                document.getElementById('location').value,
+                document.getElementById('manager').value,
+                document.getElementById('description').value);"
+      >
+        Add new bakery
+      </button>
+
+      <div id="content"></div>
+    </section>
+    <div id="container"></div>
+
+    <script src="js/admin.js"></script>
+  </body>
+</html>
