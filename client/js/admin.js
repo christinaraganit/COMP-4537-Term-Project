@@ -28,9 +28,25 @@ function postBakery(name, location, manager, description){
             const yourFunction = async () => {
                 await delay(2000);
                 text.style.display = "none";
-                getBakeries()
+                getBakeries();
+                stats();
             }
             yourFunction();
+        })
+    })();
+}
+
+function stats() {
+    (async() => {
+        let result = await fetch(endPointRoot + "/stats").then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+        }).then((res) => {
+            document.getElementById("stats").innerHTML = "";
+            for(let i = 0; i < res.length; i++){
+                generateStats(res[i]);
+            }
         })
     })();
 }
@@ -113,6 +129,32 @@ function generateBakery(bakeryObj){
         
 }
 
+function generateStats(statsObj){
+    let stats = document.getElementById("stats");
+    console.log(statsObj);
+    let text1 = document.createElement("p");
+    let text2 = document.createElement("p");
+    let text3 = document.createElement("p");
+    let text4 = document.createElement("p");
+    let text5 = document.createElement("p");
+    
+    text1.innerHTML = statsObj.Endpoint;
+    stats.append(text1);
+        
+    text2.innerHTML = statsObj.GET_stat;
+    stats.append(text2);
+        
+    text3.innerHTML = statsObj.POST_stat;
+    stats.append(text3);
+        
+    text4.innerHTML = statsObj.PUT_stat;
+    stats.append(text4);
+        
+    text5.innerHTML = statsObj.DELETE_stat;
+    stats.append(text5);
+}
+
 
 
 getBakeries();
+stats();
