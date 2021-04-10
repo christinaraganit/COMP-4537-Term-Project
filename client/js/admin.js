@@ -1,4 +1,3 @@
-const endPointRoot = "https://ashergum.com/Comp4537/termproject/API/V1";
 const xhttp = new XMLHttpRequest();
 
 // post request for bakery
