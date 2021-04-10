@@ -84,7 +84,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="bakeryModal">
             <!-- Form -->
             <form class="form-example" action="" method="post">
               <!-- Input fields -->
@@ -139,7 +139,13 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Add bakery</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="getBakeryDetails()"
+            >
+              Add bakery
+            </button>
           </div>
         </div>
       </div>
@@ -222,7 +228,13 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-info">Add dessert</button>
+            <button
+              type="button"
+              class="btn btn-info"
+              onclick="getDessertDetails()"
+            >
+              Add dessert
+            </button>
           </div>
         </div>
       </div>
@@ -286,13 +298,13 @@
                 />
               </div>
               <div class="form-group">
-                <label for="bakeryID">Bakery working at</label>
+                <label for="employeeBakeryID">Bakery working at</label>
                 <input
                   type="number"
-                  class="form-control bakeryID"
-                  id="bakeryID"
+                  class="form-control employeeBakeryID"
+                  id="employeeBakeryID"
                   placeholder="Bakery availability"
-                  name="bakeryID"
+                  name="employeeBakeryID"
                 />
               </div>
               <div class="form-group">
@@ -315,11 +327,18 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-success">Add employee</button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="getEmployeeDetails()"
+            >
+              Add employee
+            </button>
           </div>
         </div>
       </div>
     </div>
     <script src="js/admin-data.js"></script>
+    <script src="js/admin-data-post.js"></script>
   </body>
 </html>
