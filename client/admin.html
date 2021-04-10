@@ -9,27 +9,35 @@
   </head>
   <body>
     <section>
-      <label for="name">Name of Bakery</label>
+      <label for="id">id</label>
+      <input id="id" />
+
+      <label for="name">first</label>
       <input id="name" />
 
-      <label for="location">Location of Bakery</label>
+      <label for="location">last</label>
       <input id="location" />
 
-      <label for="manager">Manager of Bakery</label>
+      <label for="manager">descript</label>
       <input id="manager" />
 
-      <label for="description">Description of Bakery</label>
+      <label for="description">role</label>
       <input id="description" />
+
+      <label for="bacid">bacid</label>
+      <input id="bacid" />
 
       <button
         type="button"
         class="btn btn-primary"
         onclick="
-            postBakery(
+            putRequest(
+                document.getElementById('id').value,
                 document.getElementById('name').value,
                 document.getElementById('location').value,
                 document.getElementById('manager').value,
-                document.getElementById('description').value);"
+                document.getElementById('description').value,
+                document.getElementById('bacid').value);"
       >
         Add new bakery
       </button>
