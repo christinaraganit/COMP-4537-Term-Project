@@ -1,5 +1,7 @@
 const endPointRoot = "https://ashergum.com/Comp4537/termproject/API/V1";
 const xhttp = new XMLHttpRequest();
+let employeeBeingEdited = -1;
+let employeeModalBtnListenersAdded = false;
 
 // ---------------------------------------BAKERIES--------------------------------------------
 function getBakeries() {
@@ -240,6 +242,35 @@ function getEmployees() {
         for (let i = 0; i < res.length; i++) {
           generateEmployee(res[i]);
         }
+
+        function editEmployee() {
+          putEmployee(
+            employeeBeingEdited,
+            document.getElementById("editEmployeeFirstName").value,
+            document.getElementById("editEmployeeLastName").value,
+            document.getElementById("editEmployeeDescription").value,
+            document.getElementById("editEmployeeRole").value,
+            document.getElementById("editEmployeeBakeryID").value
+          );
+          let text = document.createElement("H1");
+          text.innerHTML = "The employee was edited.";
+          let employeeModal = document.getElementById("editEmployeeModalBody");
+          employeeModal.append(text);
+
+          setTimeout(function () {
+            document.getElementById("editEmployeeFirstName").value = "";
+            document.getElementById("editEmployeeLastName").value = "";
+            document.getElementById("editEmployeeDescription").value = "";
+            document.getElementById("editEmployeeRole").value = "";
+            document.getElementById("editEmployeeBakeryID").value = "";
+            text.innerHTML = "";
+          }, 3000);
+        }
+
+        if (!employeeModalBtnListenersAdded) {
+          editEmployeeModalBtn.addEventListener("click", editEmployee);
+          employeeModalBtnListenersAdded = true;
+        }
       });
   })();
 }
@@ -286,27 +317,17 @@ function generateEmployee(employeeObj) {
 
   editEmployeeBtn.innerHTML = "Edit employee";
   deleteEmployeeBtn.innerHTML = "Delete employee";
-
   editEmployeeBtn.setAttribute("data-toggle", "modal");
   editEmployeeBtn.setAttribute("data-target", "#editEmployeeModal");
+  editEmployeeBtn.addEventListener("click", function () {
+    employeeBeingEdited = employeeObj.employeeID;
+  });
+
   deleteEmployeeBtn.addEventListener("click", function () {
     deleteRequest("Employee", employeeObj.employeeID).then(() => {
       document.getElementById("container").innerHTML = "";
       getEmployees();
     });
-  });
-
-  editEmployeeModalBtn = document.getElementById("editEmployeeModalBtn");
-  editEmployeeModalBtn.addEventListener("click", function () {
-    putEmployee(
-      document.getElementById("editEmployeeFirstName").value,
-      document.getElementById("editEmployeeLastName").value,
-      document.getElementById("editEmployeeDescription").value,
-      document.getElementById("editEmployeeRole").value,
-      document.getElementById("editEmployeeBakeryID").value,
-      employeeObj.employeeID
-    );
-    getEmployees();
   });
 
   employeeContainer.appendChild(div);
@@ -334,6 +355,33 @@ async function deleteRequest(type, id) {
     }),
   }).then((res) => {
     if (res.ok) {
+      return res.json();
+    }
+  });
+}
+
+async function putEmployee(
+  id,
+  firstName,
+  lastName,
+  description,
+  role,
+  bakeryID
+) {
+  let result = fetch(endPointRoot + "/employee", {
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      employeeID: id,
+      firstName: firstName,
+      lastName: lastName,
+      description: description,
+      role: role,
+      bakeryID: bakeryID,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      getEmployees();
       return res.json();
     }
   });
