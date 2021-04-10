@@ -74,7 +74,13 @@ function generateBakery(bakeryObj) {
   editBakeryBtn.innerHTML = "Edit bakery";
   deleteBakeryBtn.innerHTML = "Delete bakery";
   editBakeryBtn.setAttribute("onclick", "editBakery()");
-  deleteBakeryBtn.setAttribute("onclick", "deleteBakery()");
+  deleteBakeryBtn.addEventListener('click', function(){
+    deleteRequest("Bakery", bakeryObj.bakeryID).then(() =>{
+      bakeryObj = null;
+      document.getElementById("container").innerHTML = "";
+      getBakeries();
+    });
+  })
 
   bakeryContainer.appendChild(div);
   div.appendChild(bakeryInfo);
@@ -104,7 +110,6 @@ function getDesserts() {
       })
       .then((res) => {
         document.getElementById("container").innerHTML = "";
-
         let dessertTitle = document.createElement("h2");
         dessertTitle.setAttribute("class", "text-info font-weight-bold");
         dessertTitle.innerHTML = "Desserts";
@@ -174,6 +179,12 @@ function generateDessert(dessertObj) {
   editDessertBtn.setAttribute("class", "btn btn-secondary");
   editDessertBtn.setAttribute("style", "margin-right: 8px");
   deleteDessertBtn.setAttribute("class", "btn btn-outline-danger");
+  deleteDessertBtn.addEventListener('click', function(){
+    deleteRequest("Dessert", dessertObj.dessertID).then(() =>{
+      document.getElementById("container").innerHTML = "";
+      getDesserts();
+    });
+  })
 
   dessertName.innerHTML = dessertObj.dessertName;
   dessertIngredients.innerHTML =
@@ -190,7 +201,6 @@ function generateDessert(dessertObj) {
   editDessertBtn.innerHTML = "Edit dessert";
   deleteDessertBtn.innerHTML = "Delete dessert";
   editDessertBtn.setAttribute("onclick", "editDessert()");
-  deleteDessertBtn.setAttribute("onclick", "deleteDessert()");
 
   dessertContainer.appendChild(div);
   div.appendChild(dessertInfo);
@@ -297,4 +307,20 @@ function generateEmployee(employeeObj) {
   employeeFooter.appendChild(deleteEmployeeBtn);
 
   document.getElementById("container").appendChild(div);
+}
+
+async function deleteRequest(type, id) {
+      let result = await fetch(endPointRoot + "/" + type, {
+          method: "delete",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: type,
+            id: id
+          }),
+        }
+      ).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      });
 }
