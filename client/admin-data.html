@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/admin-data.css" />
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <title>Admin - Add data</title>
+  </head>
+
+  <body class="h-100">
+    <div class="container h-100">
+      <div
+        id="outerDiv"
+        class="row h-100 justify-content-center align-items-center"
+      >
+        <div>
+          <!-- Buttons-->
+          <button type="button" class="btn btn-primary" onclick="getBakeries()">
+            View bakeries
+          </button>
+          <button type="button" class="btn btn-info" onclick="getDesserts()">
+            View desserts
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            onclick="getEmployees()"
+          >
+            View employees
+          </button>
+          <button type="button" class="btn btn-danger" onclick="logout()">
+            Log out
+          </button>
+        </div>
+      </div>
+      <div class="row" id="container"></div>
+    </div>
+
+    <!-- Bakery modal -->
+    <div
+      class="modal fade"
+      id="addBakeryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add a new bakery</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Form -->
+            <form class="form-example" action="" method="post">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="bakeryName">Bakery name</label>
+                <input
+                  type="text"
+                  class="form-control bakeryName"
+                  id="bakeryName"
+                  placeholder="Bakery name"
+                  name="bakeryName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bakeryLocation">Bakery location</label>
+                <input
+                  type="text"
+                  class="form-control bakeryLocation"
+                  id="bakeryLocation"
+                  placeholder="Bakery location"
+                  name="bakeryLocation"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bakeryManager">Bakery manager</label>
+                <input
+                  type="text"
+                  class="form-control bakeryManager"
+                  id="bakeryManager"
+                  placeholder="Bakery manager"
+                  name="bakeryManager"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bakeryDescription">Bakery description</label>
+                <input
+                  type="text"
+                  class="form-control bakeryDescription"
+                  id="bakeryDescription"
+                  placeholder="Bakery description"
+                  name="bakeryDescription"
+                />
+              </div>
+            </form>
+            <!-- Form end -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Add bakery</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dessert modal -->
+    <div
+      class="modal fade"
+      id="addDessertModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add a new dessert
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-example" action="" method="post">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="dessertName">Dessert name</label>
+                <input
+                  type="text"
+                  class="form-control dessertName"
+                  id="dessertName"
+                  placeholder="Dessert name"
+                  name="dessertName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dessertIngredients">Dessert ingredients</label>
+                <input
+                  type="dessertIngredients"
+                  class="form-control dessertIngredients"
+                  id="dessertIngredients"
+                  placeholder="Dessert ingredients"
+                  name="dessertIngredients"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dessertDescription">Dessert description</label>
+                <input
+                  type="dessertDescription"
+                  class="form-control dessertDescription"
+                  id="dessertDescription"
+                  placeholder="Dessert description"
+                  name="dessertDescription"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bakeryID">Bakery availability</label>
+                <input
+                  type="number"
+                  class="form-control bakeryID"
+                  id="bakeryID"
+                  placeholder="Bakery availability"
+                  name="bakeryID"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-info">Add dessert</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employee modal -->
+    <div
+      class="modal fade"
+      id="addEmployeeModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Add a new employee
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-example" action="" method="post">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="employeeRole">Employee role</label>
+                <input
+                  type="text"
+                  class="form-control employeeRole"
+                  id="employeeRole"
+                  placeholder="Employee role"
+                  name="employeeRole"
+                />
+              </div>
+              <div class="form-group">
+                <label for="employeeFirstName">First name</label>
+                <input
+                  type="employeeFirstName"
+                  class="form-control employeeFirstName"
+                  id="employeeFirstName"
+                  placeholder="First name"
+                  name="employeeFirstName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="employeeLastName">Last name</label>
+                <input
+                  type="employeeLastName"
+                  class="form-control employeeLastName"
+                  id="employeeLastName"
+                  placeholder="Last name"
+                  name="employeeLastName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bakeryID">Bakery working at</label>
+                <input
+                  type="number"
+                  class="form-control bakeryID"
+                  id="bakeryID"
+                  placeholder="Bakery availability"
+                  name="bakeryID"
+                />
+              </div>
+              <div class="form-group">
+                <label for="employeeDescription">Employee description</label>
+                <input
+                  type="employeeDescription"
+                  class="form-control employeeDescription"
+                  id="employeeDescription"
+                  placeholder="Employee description"
+                  name="employeeDescription"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-success">Add employee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/admin-data.js"></script>
+  </body>
+</html>
