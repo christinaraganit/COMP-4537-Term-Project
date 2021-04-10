@@ -95,6 +95,53 @@ function postEmployee(firstName, lastName, description, role, bakeryID) {
         text.innerHTML = "The employee was added.";
         let employeeModal = document.getElementById("employeeModal");
         employeeModal.append(text);
+
+        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+        const yourFunction = async () => {
+          await delay(2000);
+          text.style.display = "none";
+          getEmployees();
+        };
+        yourFunction();
+      });
+  })();
+}
+
+// -----------------------------------------------EMPLOYEE PUT-----------------------------------------
+function putEmployee(
+  firstName,
+  lastName,
+  description,
+  role,
+  bakeryID,
+  emeployeeID
+) {
+  (async () => {
+    let result = fetch(endPointRoot + "/employee", {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        emeployeeID: emeployeeID,
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
+        description: description,
+        bakeryID: bakeryID,
+      }),
+    })
+      .then((res) => {
+        console.log(res.json());
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(() => {
+        // this shows visually that the data has been sent to the database
+        let text = document.createElement("H1");
+        text.innerHTML = "The employee was edited.";
+        let employeeModal = document.getElementById("editEmployeeModalBody");
+        employeeModal.append(text);
+
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         const yourFunction = async () => {
           await delay(2000);
@@ -140,7 +187,10 @@ function generateStatsTable() {
   );
 
   let statsTable = document.createElement("table");
-  statsTable.setAttribute("class", "table table-bordered table-responsive");
+  statsTable.setAttribute(
+    "class",
+    "table table-bordered table-striped table-responsive"
+  );
 
   let statsTableHead = document.createElement("thead");
   statsTableHead.setAttribute("class", "thead-dark");
