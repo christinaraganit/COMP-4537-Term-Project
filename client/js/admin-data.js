@@ -179,8 +179,10 @@ function generateDessert(dessertObj) {
   dessertIngredients.innerHTML =
     "Ingredients: " + dessertObj.dessertIngredients;
   dessertDescription.innerHTML = dessertObj.dessertDescription;
-  dessertBakery.innerHTML =
-    "Available in " + getBakery(dessertObj.bakeryID) + " bakery";
+
+  getBakery(dessertObj.bakeryID).then( response => {
+    dessertBakery.innerHTML = "Available in " + response + " bakery";
+  })
 
   console.log("Generate dessert " + dessertObj.bakeryID);
   console.log("Generate dessert " + getBakery(dessertObj.bakeryID));
