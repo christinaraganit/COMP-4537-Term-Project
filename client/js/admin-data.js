@@ -136,12 +136,9 @@ async function getBakery(value) {
       }
     })
     .then((res) => {
-      console.log(res);
-      console.log(res[0].bakeryName);
       bakeryName = res[0].bakeryName;
       return res[0].bakeryName;
     });
-  console.log("getBakery bakeryName" + bakeryName);
   return bakeryName;
 }
 
@@ -190,9 +187,6 @@ function generateDessert(dessertObj) {
   getBakery(dessertObj.bakeryID).then((response) => {
     dessertBakery.innerHTML = "Available in " + response + " bakery";
   });
-
-  console.log("Generate dessert " + dessertObj.bakeryID);
-  console.log("Generate dessert " + getBakery(dessertObj.bakeryID));
 
   editDessertBtn.innerHTML = "Edit dessert";
   deleteDessertBtn.innerHTML = "Delete dessert";
@@ -288,7 +282,12 @@ function generateEmployee(employeeObj) {
   editEmployeeBtn.innerHTML = "Edit employee";
   deleteEmployeeBtn.innerHTML = "Delete employee";
   editEmployeeBtn.setAttribute("onclick", "editEmployee()");
-  deleteEmployeeBtn.setAttribute("onclick", "deleteEmployee()");
+  deleteEmployeeBtn.addEventListener('click', function(){
+    deleteRequest("Employee", employeeObj.employeeID).then(() =>{
+      document.getElementById("container").innerHTML = "";
+      getEmployees();
+    });
+  })
 
   employeeContainer.appendChild(div);
   div.appendChild(employeeInfo);
