@@ -30,7 +30,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    <title>Admin - Add data</title>
+    <title>Admin - Home</title>
   </head>
 
   <body class="h-100">
@@ -53,6 +53,9 @@
             onclick="getEmployees()"
           >
             View employees
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="getStats()">
+            View statistics
           </button>
           <button type="button" class="btn btn-danger" onclick="logout()">
             Log out
@@ -142,7 +145,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="getBakeryDetails()"
+              onclick="postBakery(document.getElementById('bakeryName').value,  document.getElementById('bakeryLocation').value, document.getElementById('bakeryManager').value, document.getElementById('bakeryDescription').value)"
             >
               Add bakery
             </button>
@@ -175,7 +178,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="dessertModal">
             <form class="form-example" action="" method="post">
               <!-- Input fields -->
               <div class="form-group">
@@ -209,13 +212,13 @@
                 />
               </div>
               <div class="form-group">
-                <label for="bakeryID">Bakery availability</label>
+                <label for="dessertBakeryID">Bakery availability</label>
                 <input
                   type="number"
-                  class="form-control bakeryID"
-                  id="bakeryID"
+                  class="form-control dessertBakeryID"
+                  id="dessertBakeryID"
                   placeholder="Bakery availability"
-                  name="bakeryID"
+                  name="dessertBakeryID"
                 />
               </div>
             </form>
@@ -231,7 +234,7 @@
             <button
               type="button"
               class="btn btn-info"
-              onclick="getDessertDetails()"
+              onclick="postDessert(document.getElementById('dessertName').value,  document.getElementById('dessertIngredients').value, document.getElementById('dessertDescription').value, document.getElementById('dessertBakeryID').value)"
             >
               Add dessert
             </button>
@@ -264,7 +267,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="employeeModal">
             <form class="form-example" action="" method="post">
               <!-- Input fields -->
               <div class="form-group">
@@ -330,7 +333,7 @@
             <button
               type="button"
               class="btn btn-success"
-              onclick="getEmployeeDetails()"
+              onclick="postEmployee(document.getElementById('employeeFirstName').value,  document.getElementById('employeeLastName').value, document.getElementById('employeeDescription').value, document.getElementById('employeeRole').value, document.getElementById('employeeBakeryID').value)"
             >
               Add employee
             </button>
