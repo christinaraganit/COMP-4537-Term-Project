@@ -140,7 +140,10 @@ function generateStatsTable() {
   );
 
   let statsTable = document.createElement("table");
-  statsTable.setAttribute("class", "table table-bordered table-responsive");
+  statsTable.setAttribute(
+    "class",
+    "table table-bordered table-striped table-responsive"
+  );
 
   let statsTableHead = document.createElement("thead");
   statsTableHead.setAttribute("class", "thead-dark");

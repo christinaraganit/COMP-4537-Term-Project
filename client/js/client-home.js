@@ -17,15 +17,7 @@ function getBakeries() {
         bakeryTitle.setAttribute("class", "text-primary font-weight-bold");
         bakeryTitle.innerHTML = "Bakeries";
 
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new bakery";
-        button.setAttribute("class", "w-100 btn btn-outline-primary");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addBakeryModal");
-
         document.getElementById("container").appendChild(bakeryTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateBakery(res[i]);
         }
@@ -50,52 +42,29 @@ function generateBakery(bakeryObj) {
   let bakeryManager = document.createElement("p");
   let bakeryDescription = document.createElement("p");
   let bakeryFooter = document.createElement("div");
-  let editBakeryBtn = document.createElement("button");
-  let deleteBakeryBtn = document.createElement("button");
-
   div.setAttribute("class", "w-100 card");
   div.setAttribute("style", "margin-bottom: 12px");
   bakeryInfo.setAttribute("class", "card-body");
   bakeryName.setAttribute("class", "card-title");
   bakeryLocation.setAttribute("class", "card-subtitle mb-2 text-muted");
-  bakeryManager.setAttribute("class", "card-text");
-  bakeryDescription.setAttribute("class", "card-text");
   bakeryFooter.setAttribute("class", "card-footer");
-  editBakeryBtn.setAttribute("class", "btn btn-secondary");
-  editBakeryBtn.setAttribute("style", "margin-right: 8px");
-  deleteBakeryBtn.setAttribute("class", "btn btn-outline-danger");
+  bakeryManager.setAttribute("class", "card-text");
 
   bakeryName.innerHTML = bakeryObj.bakeryName;
   bakeryLocation.innerHTML = bakeryObj.bakeryLocation;
   bakeryManager.innerHTML = "Managed by " + bakeryObj.bakeryManager;
   bakeryDescription.innerHTML = bakeryObj.bakeryDescription;
-  editBakeryBtn.innerHTML = "Edit bakery";
-  deleteBakeryBtn.innerHTML = "Delete bakery";
-  editBakeryBtn.setAttribute("onclick", "editBakery()");
-  deleteBakeryBtn.addEventListener("click", function () {
-    deleteRequest("Bakery", bakeryObj.bakeryID).then(() => {
-      bakeryObj = null;
-      document.getElementById("container").innerHTML = "";
-      getBakeries();
-    });
-  });
 
   bakeryContainer.appendChild(div);
   div.appendChild(bakeryInfo);
+  div.appendChild(bakeryFooter);
   bakeryInfo.appendChild(bakeryName);
   bakeryInfo.appendChild(bakeryLocation);
   bakeryInfo.appendChild(bakeryManager);
-  bakeryInfo.appendChild(bakeryDescription);
-  div.appendChild(bakeryFooter);
-  bakeryFooter.appendChild(editBakeryBtn);
-  bakeryFooter.appendChild(deleteBakeryBtn);
+  bakeryFooter.appendChild(bakeryDescription);
 
   document.getElementById("container").appendChild(div);
 }
-
-function editBakery() {}
-
-function deleteBakery() {}
 
 // ---------------------------------------DESSERTS--------------------------------------------
 function getDesserts() {
@@ -108,19 +77,12 @@ function getDesserts() {
       })
       .then((res) => {
         document.getElementById("container").innerHTML = "";
+
         let dessertTitle = document.createElement("h2");
         dessertTitle.setAttribute("class", "text-info font-weight-bold");
         dessertTitle.innerHTML = "Desserts";
 
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new dessert";
-        button.setAttribute("class", "w-100 btn btn-outline-info");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addDessertModal");
-
         document.getElementById("container").appendChild(dessertTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateDessert(res[i]);
         }
@@ -137,9 +99,12 @@ async function getBakery(value) {
       }
     })
     .then((res) => {
+      console.log(res);
+      console.log(res[0].bakeryName);
       bakeryName = res[0].bakeryName;
       return res[0].bakeryName;
     });
+  console.log("getBakery bakeryName" + bakeryName);
   return bakeryName;
 }
 
@@ -158,54 +123,37 @@ function generateDessert(dessertObj) {
   let dessertIngredients = document.createElement("h6");
   let dessertDescription = document.createElement("p");
   let dessertBakery = document.createElement("p");
-
   let dessertFooter = document.createElement("div");
-  let editDessertBtn = document.createElement("button");
-  let deleteDessertBtn = document.createElement("button");
 
   div.setAttribute("class", "w-100 card");
   div.setAttribute("style", "margin-bottom: 12px");
   dessertInfo.setAttribute("class", "card-body");
   dessertName.setAttribute("class", "card-title");
   dessertIngredients.setAttribute("class", "card-subtitle mb-2 text-muted");
-  dessertDescription.setAttribute("class", "card-text");
   dessertBakery.setAttribute("class", "card-text");
   dessertFooter.setAttribute("class", "card-footer");
-  editDessertBtn.setAttribute("class", "btn btn-secondary");
-  editDessertBtn.setAttribute("style", "margin-right: 8px");
-  deleteDessertBtn.setAttribute("class", "btn btn-outline-danger");
-  deleteDessertBtn.addEventListener("click", function () {
-    deleteRequest("Dessert", dessertObj.dessertID).then(() => {
-      document.getElementById("container").innerHTML = "";
-      getDesserts();
-    });
-  });
 
   dessertName.innerHTML = dessertObj.dessertName;
   dessertIngredients.innerHTML =
     "Ingredients: " + dessertObj.dessertIngredients;
   dessertDescription.innerHTML = dessertObj.dessertDescription;
+  dessertDescription.setAttribute("class", "card-text");
 
   getBakery(dessertObj.bakeryID).then((response) => {
     dessertBakery.innerHTML = "Available in " + response + " bakery";
   });
 
-  editDessertBtn.innerHTML = "Edit dessert";
-  deleteDessertBtn.innerHTML = "Delete dessert";
-  editDessertBtn.setAttribute("onclick", "editDessert()");
+  console.log("Generate dessert " + dessertObj.bakeryID);
+  console.log("Generate dessert " + getBakery(dessertObj.bakeryID));
 
   dessertContainer.appendChild(div);
   div.appendChild(dessertInfo);
+  div.appendChild(dessertFooter);
 
   dessertInfo.appendChild(dessertName);
   dessertInfo.appendChild(dessertIngredients);
-  dessertInfo.appendChild(dessertDescription);
   dessertInfo.appendChild(dessertBakery);
-
-  div.appendChild(dessertFooter);
-  dessertFooter.appendChild(editDessertBtn);
-  dessertFooter.appendChild(deleteDessertBtn);
-
+  dessertFooter.appendChild(dessertDescription);
   document.getElementById("container").appendChild(div);
 }
 
@@ -225,15 +173,7 @@ function getEmployees() {
         employeeTitle.setAttribute("class", "text-success font-weight-bold");
         employeeTitle.innerHTML = "Employees";
 
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new employee";
-        button.setAttribute("class", "w-100 btn btn-outline-success");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addEmployeeModal");
-
         document.getElementById("container").appendChild(employeeTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateEmployee(res[i]);
         }
@@ -256,67 +196,132 @@ function generateEmployee(employeeObj) {
   let employeeRole = document.createElement("h6");
   let employeeBakery = document.createElement("p");
   let employeeDescription = document.createElement("p");
-
   let employeeFooter = document.createElement("div");
-  let editEmployeeBtn = document.createElement("button");
-  let deleteEmployeeBtn = document.createElement("button");
 
   div.setAttribute("class", "w-100 card");
   div.setAttribute("style", "margin-bottom: 12px");
   employeeInfo.setAttribute("class", "card-body");
   employeeName.setAttribute("class", "card-title");
   employeeRole.setAttribute("class", "card-subtitle mb-2 text-muted");
-  employeeBakery.setAttribute("class", "card-text");
   employeeDescription.setAttribute("class", "card-text");
-
   employeeFooter.setAttribute("class", "card-footer");
-  editEmployeeBtn.setAttribute("class", "btn btn-secondary");
-  editEmployeeBtn.setAttribute("style", "margin-right: 8px");
-  deleteEmployeeBtn.setAttribute("class", "btn btn-outline-danger");
 
   employeeName.innerHTML = employeeObj.firstName + " " + employeeObj.lastName;
   employeeRole.innerHTML = employeeObj.role;
   getBakery(employeeObj.bakeryID).then((response) => {
     employeeBakery.innerHTML = "Works in " + response + " bakery";
   });
-  employeeDescription.innerHTML = employeeObj.description;
 
-  editEmployeeBtn.innerHTML = "Edit employee";
-  deleteEmployeeBtn.innerHTML = "Delete employee";
-  editEmployeeBtn.setAttribute("onclick", "editEmployee()");
-  deleteEmployeeBtn.addEventListener("click", function () {
-    deleteRequest("Employee", employeeObj.employeeID).then(() => {
-      document.getElementById("container").innerHTML = "";
-      getEmployees();
-    });
-  });
+  employeeBakery.setAttribute("class", "card-text");
+  employeeDescription.setAttribute("class", "card-text");
+  employeeDescription.innerHTML = employeeObj.description;
 
   employeeContainer.appendChild(div);
   div.appendChild(employeeInfo);
+  div.appendChild(employeeFooter);
 
   employeeInfo.appendChild(employeeName);
   employeeInfo.appendChild(employeeRole);
   employeeInfo.appendChild(employeeBakery);
-  employeeInfo.appendChild(employeeDescription);
-
-  div.appendChild(employeeFooter);
-  employeeFooter.appendChild(editEmployeeBtn);
-  employeeFooter.appendChild(deleteEmployeeBtn);
-
+  employeeFooter.appendChild(employeeDescription);
   document.getElementById("container").appendChild(div);
 }
 
-async function deleteRequest(type, id) {
-  let result = await fetch(endPointRoot + "/" + type, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      type: type,
-      id: id,
-    }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-  });
+function getStats() {
+  (async () => {
+    let result = await fetch(endPointRoot + "/stats")
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        document.getElementById("container").innerHTML = "";
+
+        let statsTitle = document.createElement("h2");
+        statsTitle.setAttribute("class", "text-secondary font-weight-bold");
+        statsTitle.innerHTML = "Statistics";
+
+        document.getElementById("container").appendChild(statsTitle);
+
+        generateStatsTable();
+
+        for (let i = 0; i < res.length; i++) {
+          generateStats(res[i]);
+        }
+      });
+  })();
+}
+
+function generateStatsTable() {
+  let outerDiv = document.getElementById("outerDiv");
+  outerDiv.setAttribute(
+    "class",
+    "row h-25 justify-content-center align-items-center"
+  );
+
+  let statsTable = document.createElement("table");
+  statsTable.setAttribute(
+    "class",
+    "table table-bordered table-striped table-responsive"
+  );
+
+  let statsTableHead = document.createElement("thead");
+  statsTableHead.setAttribute("class", "thead-dark");
+
+  let statsTableHeadRow = document.createElement("tr");
+  let statsTableHeading1 = document.createElement("th");
+  let statsTableHeading2 = document.createElement("th");
+  let statsTableHeading3 = document.createElement("th");
+  let statsTableHeading4 = document.createElement("th");
+  let statsTableHeading5 = document.createElement("th");
+  let statsTableBody = document.createElement("tbody");
+  statsTableBody.setAttribute("id", "statsTableBody");
+
+  statsTableHeading1.innerHTML = "Endpoint";
+  statsTableHeading1.setAttribute("class", "w-100");
+
+  statsTableHeading2.innerHTML = "GET";
+  statsTableHeading3.innerHTML = "POST";
+  statsTableHeading4.innerHTML = "PUT";
+  statsTableHeading5.innerHTML = "DELETE";
+
+  statsTable.appendChild(statsTableHead);
+  statsTable.appendChild(statsTableBody);
+  statsTableHeadRow.appendChild(statsTableHeading1);
+  statsTableHeadRow.appendChild(statsTableHeading2);
+  statsTableHeadRow.appendChild(statsTableHeading3);
+  statsTableHeadRow.appendChild(statsTableHeading4);
+  statsTableHeadRow.appendChild(statsTableHeading5);
+  statsTableHead.appendChild(statsTableHeadRow);
+
+  document.getElementById("container").appendChild(statsTable);
+}
+
+function generateStats(statsObj) {
+  let statsTableBody = document.getElementById("statsTableBody");
+
+  let statsTableRow = document.createElement("tr");
+  let statsTableHead = document.createElement("th");
+  statsTableHead.setAttribute("scope", "row");
+  statsTableHead.setAttribute("class", "w-100");
+
+  let statsTableDetail1 = document.createElement("td");
+  let statsTableDetail2 = document.createElement("td");
+  let statsTableDetail3 = document.createElement("td");
+  let statsTableDetail4 = document.createElement("td");
+
+  statsTableHead.innerHTML = statsObj.Endpoint;
+  statsTableDetail1.innerHTML = statsObj.GET_stat;
+  statsTableDetail2.innerHTML = statsObj.POST_stat;
+  statsTableDetail3.innerHTML = statsObj.PUT_stat;
+  statsTableDetail4.innerHTML = statsObj.DELETE_stat;
+
+  statsTableRow.appendChild(statsTableHead);
+  statsTableRow.appendChild(statsTableDetail1);
+  statsTableRow.appendChild(statsTableDetail2);
+  statsTableRow.appendChild(statsTableDetail3);
+  statsTableRow.appendChild(statsTableDetail4);
+
+  statsTableBody.appendChild(statsTableRow);
 }
