@@ -192,10 +192,10 @@ app.post(endPointRoot + "/employee", (req, res) => {
 // Editing a Bakery
 app.put(endPointRoot + "/bakery", (req, res) => {
     let id = req.body.bakeryID;
-    let name = req.body.bakeryName;
-    let location = req.body.bakeryLocation;
-    let manager = req.body.bakeryManager;
-    let description = req.body.bakeryDescription;
+    let name = req.body.name;
+    let location = req.body.location;
+    let manager = req.body.manager;
+    let description = req.body.description;
     let sql = "UPDATE Bakery SET bakeryName = '" + name + "', bakeryLocation = '" + location 
         + "', bakeryManager = '" + manager + "', bakeryDescription = '" + description + "' WHERE bakeryID = " + id + ";";
     db.query(sql, (err, result) => {
@@ -215,10 +215,10 @@ app.put(endPointRoot + "/bakery", (req, res) => {
 // Editing a Dessert
 app.put(endPointRoot + "/dessert", (req, res) => {
     let id = req.body.dessertID;
-    let name = req.body.dessertName;
-    let ingredients = req.body.dessertIngredients;
+    let name = req.body.name;
+    let ingredients = req.body.ingredients;
+    let description = req.body.description;
     let bakeryID = req.body.bakeryID;
-    let description = req.body.bakeryDescription;
     let sql = "UPDATE dessert SET dessertName = '" + name + "', dessertIngredients = '" + ingredients 
         + "', bakeryID = '" + bakeryID + "', dessertDescription = '" + description + "' WHERE dessertID = " + id + ";";
     db.query(sql, (err, result) => {
@@ -240,9 +240,9 @@ app.put(endPointRoot + "/employee", (req, res) => {
     let id = req.body.employeeID;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
+    let description = req.body.description;
     let role = req.body.role;
     let bakeryID = req.body.bakeryID;
-    let description = req.body.description;
     let sql = "UPDATE Employees SET firstName = '" + firstName + "', lastName = '" + lastName + "', role = '" + role 
         + "', bakeryID = '" + bakeryID + "', description = '" + description + "' WHERE employeeID = " + id + ";";
     db.query(sql, (err, result) => {
