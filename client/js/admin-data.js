@@ -71,7 +71,8 @@ function generateBakery(bakeryObj) {
   bakeryDescription.innerHTML = bakeryObj.bakeryDescription;
   editBakeryBtn.innerHTML = "Edit bakery";
   deleteBakeryBtn.innerHTML = "Delete bakery";
-  editBakeryBtn.setAttribute("onclick", "editBakery()");
+  editBakeryBtn.setAttribute("data-toggle", "modal");
+  editBakeryBtn.setAttribute("data-target", "#editBakeryModal");
   deleteBakeryBtn.addEventListener("click", function () {
     deleteRequest("Bakery", bakeryObj.bakeryID).then(() => {
       bakeryObj = null;
@@ -171,8 +172,11 @@ function generateDessert(dessertObj) {
   dessertDescription.setAttribute("class", "card-text");
   dessertBakery.setAttribute("class", "card-text");
   dessertFooter.setAttribute("class", "card-footer");
+
   editDessertBtn.setAttribute("class", "btn btn-secondary");
   editDessertBtn.setAttribute("style", "margin-right: 8px");
+  editDessertBtn.setAttribute("data-toggle", "modal");
+  editDessertBtn.setAttribute("data-target", "#editDessertModal");
   deleteDessertBtn.setAttribute("class", "btn btn-outline-danger");
   deleteDessertBtn.addEventListener("click", function () {
     deleteRequest("Dessert", dessertObj.dessertID).then(() => {
@@ -192,7 +196,6 @@ function generateDessert(dessertObj) {
 
   editDessertBtn.innerHTML = "Edit dessert";
   deleteDessertBtn.innerHTML = "Delete dessert";
-  editDessertBtn.setAttribute("onclick", "editDessert()");
 
   dessertContainer.appendChild(div);
   div.appendChild(dessertInfo);
@@ -283,12 +286,27 @@ function generateEmployee(employeeObj) {
 
   editEmployeeBtn.innerHTML = "Edit employee";
   deleteEmployeeBtn.innerHTML = "Delete employee";
-  editEmployeeBtn.setAttribute("onclick", "editEmployee()");
+
+  editEmployeeBtn.setAttribute("data-toggle", "modal");
+  editEmployeeBtn.setAttribute("data-target", "#editEmployeeModal");
   deleteEmployeeBtn.addEventListener("click", function () {
     deleteRequest("Employee", employeeObj.employeeID).then(() => {
       document.getElementById("container").innerHTML = "";
       getEmployees();
     });
+  });
+
+  editEmployeeModalBtn = document.getElementById("editEmployeeModalBtn");
+  editEmployeeModalBtn.addEventListener("click", function () {
+    putEmployee(
+      document.getElementById("editEmployeeFirstName").value,
+      document.getElementById("editEmployeeLastName").value,
+      document.getElementById("editEmployeeDescription").value,
+      document.getElementById("editEmployeeRole").value,
+      document.getElementById("editEmployeeBakeryID").value,
+      employeeObj.employeeID
+    );
+    getEmployees();
   });
 
   employeeContainer.appendChild(div);

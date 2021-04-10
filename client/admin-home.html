@@ -65,7 +65,8 @@
       <div class="row" id="container"></div>
     </div>
 
-    <!-- Bakery modal -->
+    <!----------------------------------------------BAKERY MODALS-------------------------------------->
+    <!-- Post bakery modal -->
     <div
       class="modal fade"
       id="addBakeryModal"
@@ -145,7 +146,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="postBakery(document.getElementById('bakeryName').value,  document.getElementById('bakeryLocation').value, document.getElementById('bakeryManager').value, document.getElementById('bakeryDescription').value)"
+              onclick="postBakery(document.getElementById('bakeryName').value, document.getElementById('bakeryLocation').value, document.getElementById('bakeryManager').value, document.getElementById('bakeryDescription').value)"
             >
               Add bakery
             </button>
@@ -154,7 +155,97 @@
       </div>
     </div>
 
-    <!-- Dessert modal -->
+    <!-- Edit bakery modal -->
+    <div
+      class="modal fade"
+      id="editBakeryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit this bakery</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="editBakeryModalBody">
+            <!-- Form -->
+            <form class="form-example" action="" method="put">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="editBakeryName">Bakery name</label>
+                <input
+                  type="text"
+                  class="form-control editBakeryName"
+                  id="editBakeryName"
+                  placeholder="Bakery name"
+                  name="editBakeryName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editBakeryLocation">Bakery location</label>
+                <input
+                  type="text"
+                  class="form-control editBakeryLocation"
+                  id="editBakeryLocation"
+                  placeholder="Bakery location"
+                  name="editBakeryLocation"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editBakeryManager">Bakery manager</label>
+                <input
+                  type="text"
+                  class="form-control editBakeryManager"
+                  id="editBakeryManager"
+                  placeholder="Bakery manager"
+                  name="editBakeryManager"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editBakeryDescription">Bakery description</label>
+                <input
+                  type="text"
+                  class="form-control editBakeryDescription"
+                  id="editBakeryDescription"
+                  placeholder="Bakery description"
+                  name="editBakeryDescription"
+                />
+              </div>
+            </form>
+            <!-- Form end -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="editBakeryModalBtn"
+            >
+              Edit bakery
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!----------------------------------------------DESSERT MODALS-------------------------------------->
+    <!-- Post dessert modal -->
     <div
       class="modal fade"
       id="addDessertModal"
@@ -243,7 +334,96 @@
       </div>
     </div>
 
-    <!-- Employee modal -->
+    <div
+      class="modal fade"
+      id="editDessertModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Edit this dessert
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="editDessertModalBody">
+            <form class="form-example" action="" method="post">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="editDessertName">Dessert name</label>
+                <input
+                  type="text"
+                  class="form-control editDessertName"
+                  id="editDessertName"
+                  placeholder="Dessert name"
+                  name="editDessertName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editDessertIngredients">Dessert ingredients</label>
+                <input
+                  type="text"
+                  class="form-control editDessertIngredients"
+                  id="editDessertIngredients"
+                  placeholder="Dessert ingredients"
+                  name="editDessertIngredients"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editDessertDescription">Dessert description</label>
+                <input
+                  type="text"
+                  class="form-control editDessertDescription"
+                  id="editDessertDescription"
+                  placeholder="Dessert description"
+                  name="editDessertDescription"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editDessertBakeryID">Bakery availability</label>
+                <input
+                  type="number"
+                  class="form-control editDessertBakeryID"
+                  id="editDessertBakeryID"
+                  placeholder="Bakery availability"
+                  name="editDessertBakeryID"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-info"
+              id="editDessertModalBtn"
+              onclick="postDessert(document.getElementById('editDessertName').value,  document.getElementById('editDessertIngredients').value, document.getElementById('editDessertDescription').value, document.getElementById('editDessertBakeryID').value)"
+            >
+              Edit dessert
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post employee modal -->
     <div
       class="modal fade"
       id="addEmployeeModal"
@@ -283,7 +463,7 @@
               <div class="form-group">
                 <label for="employeeFirstName">First name</label>
                 <input
-                  type="employeeFirstName"
+                  type="text"
                   class="form-control employeeFirstName"
                   id="employeeFirstName"
                   placeholder="First name"
@@ -293,7 +473,7 @@
               <div class="form-group">
                 <label for="employeeLastName">Last name</label>
                 <input
-                  type="employeeLastName"
+                  type="text"
                   class="form-control employeeLastName"
                   id="employeeLastName"
                   placeholder="Last name"
@@ -311,9 +491,11 @@
                 />
               </div>
               <div class="form-group">
-                <label for="employeeDescription">Employee description</label>
+                <label for="editEmployeeDescription"
+                  >Employee description</label
+                >
                 <input
-                  type="employeeDescription"
+                  type="text"
                   class="form-control employeeDescription"
                   id="employeeDescription"
                   placeholder="Employee description"
@@ -333,7 +515,7 @@
             <button
               type="button"
               class="btn btn-success"
-              onclick="postEmployee(document.getElementById('employeeFirstName').value,  document.getElementById('employeeLastName').value, document.getElementById('employeeDescription').value, document.getElementById('employeeRole').value, document.getElementById('employeeBakeryID').value)"
+              onclick="postEmployee(document.getElementById('employeeFirstName').value, document.getElementById('employeeLastName').value, document.getElementById('employeeDescription').value, document.getElementById('employeeRole').value, document.getElementById('employeeBakeryID').value)"
             >
               Add employee
             </button>
@@ -341,6 +523,108 @@
         </div>
       </div>
     </div>
+
+    <!---------------------- PUT EMPLOYEE ---------------------------------------------------------------->
+    <div
+      class="modal fade"
+      id="editEmployeeModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Edit this employee
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="editEmployeeModalBody">
+            <form class="form-example" action="" method="post">
+              <!-- Input fields -->
+              <div class="form-group">
+                <label for="editEmployeeRole">Employee role</label>
+                <input
+                  type="text"
+                  class="form-control editEmployeeRole"
+                  id="editEmployeeRole"
+                  placeholder="Employee role"
+                  name="editEmployeeRole"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editEmployeeFirstName">First name</label>
+                <input
+                  type="text"
+                  class="form-control editEmployeeFirstName"
+                  id="editEmployeeFirstName"
+                  placeholder="First name"
+                  name="editEmployeeFirstName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editEmployeeLastName">Last name</label>
+                <input
+                  type="text"
+                  class="form-control editEmployeeLastName"
+                  id="editEmployeeLastName"
+                  placeholder="Last name"
+                  name="editEmployeeLastName"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editEmployeeBakeryID">Bakery working at</label>
+                <input
+                  type="number"
+                  class="form-control editEmployeeBakeryID"
+                  id="editEmployeeBakeryID"
+                  placeholder="Bakery availability"
+                  name="editEmployeeBakeryID"
+                />
+              </div>
+              <div class="form-group">
+                <label for="editEmployeeDescription"
+                  >Employee description</label
+                >
+                <input
+                  type="text"
+                  class="form-control editEmployeeDescription"
+                  id="editEmployeeDescription"
+                  placeholder="Employee description"
+                  name="editEmployeeDescription"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              id="editEmployeeModalBtn"
+            >
+              Edit employee
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="js/admin-data.js"></script>
     <script src="js/admin-data-post.js"></script>
   </body>
