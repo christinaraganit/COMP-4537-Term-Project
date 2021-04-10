@@ -182,6 +182,83 @@ app.post(endPointRoot + "/employee", (req, res) => {
     });
 });
 
+/**
+ * -------------------------------------------------------
+ * PUT Requests start here, These are all the requests
+ * for editing elements to the database.
+ * -------------------------------------------------------
+ */
+
+// Editing a Bakery
+app.put(endPointRoot + "/bakery", (req, res) => {
+    let id = req.body.bakeryID;
+    let name = req.body.bakeryName;
+    let location = req.body.bakeryLocation;
+    let manager = req.body.bakeryManager;
+    let description = req.body.bakeryDescription;
+    let sql = "UPDATE Bakery SET bakeryName = '" + name + "', bakeryLocation = '" + location 
+        + "', bakeryManager = '" + manager + "', bakeryDescription = '" + description + "' WHERE bakeryID = " + id + ";";
+    db.query(sql, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.json(result);
+    });
+    // PUT stat query
+    db.query(PUT_stat_increment_root + "'" + endPointRoot + "/bakery'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+  });
+
+// Editing a Dessert
+app.put(endPointRoot + "/dessert", (req, res) => {
+    let id = req.body.dessertID;
+    let name = req.body.dessertName;
+    let ingredients = req.body.dessertIngredients;
+    let bakeryID = req.body.bakeryID;
+    let description = req.body.bakeryDescription;
+    let sql = "UPDATE dessert SET dessertName = '" + name + "', dessertIngredients = '" + ingredients 
+        + "', bakeryID = '" + bakeryID + "', dessertDescription = '" + description + "' WHERE dessertID = " + id + ";";
+    db.query(sql, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    res.json(result);
+    });
+    // PUT stat query
+    db.query(PUT_stat_increment_root + "'" + endPointRoot + "/dessert'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+});
+
+// Editing a Employee
+app.put(endPointRoot + "/employee", (req, res) => {
+    let id = req.body.employeeID;
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let role = req.body.role;
+    let bakeryID = req.body.bakeryID;
+    let description = req.body.description;
+    let sql = "UPDATE Employees SET firstName = '" + firstName + "', lastName = '" + lastName + "', role = '" + role 
+        + "', bakeryID = '" + bakeryID + "', description = '" + description + "' WHERE employeeID = " + id + ";";
+    db.query(sql, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    res.json(result);
+    });
+    // PUT stat query
+    db.query(PUT_stat_increment_root + "'" + endPointRoot + "/employee'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+});
+
 
 /**
  * -------------------------------------------------------
