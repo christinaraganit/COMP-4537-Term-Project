@@ -267,18 +267,11 @@ app.put(endPointRoot + "/employee", (req, res) => {
  * -------------------------------------------------------
  */
 
-// Removing data from the database
-app.delete("*", (req, res) => {
+// Removing bakery from the database
+app.delete(endPointRoot + "/bakery", (req, res) => {
     let type = req.body.type;
     let id = req.body.id;
-    let sql = "";
-    if(type == "Bakery"){
-        sql = "DELETE FROM `Bakery` WHERE bakeryID = " + id + ";";
-    } else if(type == "Dessert"){
-        sql = "DELETE FROM `Dessert` WHERE dessertID = " + id + ";";
-    } else if(type == "Employee"){
-        sql = "DELETE FROM `Employees` WHERE employeeID = " + id + ";";
-    }
+    let sql = "DELETE FROM `Bakery` WHERE bakeryID = " + id + ";";
     
     db.query(sql, (err, result) => {
         if (err) {
@@ -296,6 +289,49 @@ app.delete("*", (req, res) => {
     });
 });
 
+// Removing dessert from the database
+app.delete(endPointRoot + "/dessert", (req, res) => {
+    let type = req.body.type;
+    let id = req.body.id;
+    let sql = "DELETE FROM `Dessert` WHERE dessertID = " + id + ";";
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+           
+        res.json(result);
+    });
+
+    // DELETE stat query
+    db.query(DELETE_stat_increment_root + "'" + endPointRoot + "/" + type + "'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+});
+
+// Removing employee from the database
+app.delete(endPointRoot + "/employee", (req, res) => {
+    let type = req.body.type;
+    let id = req.body.id;
+    let sql = "DELETE FROM `Employees` WHERE employeeID = " + id + ";";
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+           
+        res.json(result);
+    });
+
+    // DELETE stat query
+    db.query(DELETE_stat_increment_root + "'" + endPointRoot + "/" + type + "'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+});
 
 
 // Gets all the Bakeries, Employees, or Desserts in the database
