@@ -20,7 +20,6 @@ function getBakeries() {
         let button = document.createElement("BUTTON");
         button.innerHTML = "Add new bakery";
         button.setAttribute("class", "w-100 btn btn-outline-primary");
-        button.setAttribute("onclick", "addBakeryFields()");
         button.setAttribute("style", "margin-bottom: 24px");
         button.setAttribute("data-toggle", "modal");
         button.setAttribute("data-target", "#addBakeryModal");
@@ -33,8 +32,6 @@ function getBakeries() {
       });
   })();
 }
-
-function addBakeryFields() {}
 
 function addBakery() {}
 
@@ -112,7 +109,6 @@ function getDesserts() {
         let button = document.createElement("BUTTON");
         button.innerHTML = "Add new dessert";
         button.setAttribute("class", "w-100 btn btn-outline-info");
-        button.setAttribute("onclick", "addDessertFields()");
         button.setAttribute("style", "margin-bottom: 24px");
         button.setAttribute("data-toggle", "modal");
         button.setAttribute("data-target", "#addDessertModal");
@@ -180,9 +176,9 @@ function generateDessert(dessertObj) {
     "Ingredients: " + dessertObj.dessertIngredients;
   dessertDescription.innerHTML = dessertObj.dessertDescription;
 
-  getBakery(dessertObj.bakeryID).then( response => {
+  getBakery(dessertObj.bakeryID).then((response) => {
     dessertBakery.innerHTML = "Available in " + response + " bakery";
-  })
+  });
 
   console.log("Generate dessert " + dessertObj.bakeryID);
   console.log("Generate dessert " + getBakery(dessertObj.bakeryID));
@@ -226,7 +222,6 @@ function getEmployees() {
         let button = document.createElement("BUTTON");
         button.innerHTML = "Add new employee";
         button.setAttribute("class", "w-100 btn btn-outline-success");
-        button.setAttribute("onclick", "addEmployeeFields()");
         button.setAttribute("style", "margin-bottom: 24px");
         button.setAttribute("data-toggle", "modal");
         button.setAttribute("data-target", "#addEmployeeModal");
@@ -275,8 +270,9 @@ function generateEmployee(employeeObj) {
 
   employeeName.innerHTML = employeeObj.firstName + " " + employeeObj.lastName;
   employeeRole.innerHTML = employeeObj.role;
-  employeeBakery.innerHTML =
-    "Works in bakery " + getBakery(employeeObj.bakeryID);
+  getBakery(employeeObj.bakeryID).then((response) => {
+    employeeBakery.innerHTML = "Works in " + response + " bakery";
+  });
   employeeDescription.innerHTML = employeeObj.description;
 
   editEmployeeBtn.innerHTML = "Edit employee";
