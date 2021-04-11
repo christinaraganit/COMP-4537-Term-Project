@@ -358,7 +358,7 @@
             </button>
           </div>
           <div class="modal-body" id="editDessertModalBody">
-            <form class="form-example" action="" method="post">
+            <form class="form-example" action="" method="put">
               <!-- Input fields -->
               <div class="form-group">
                 <label for="editDessertName">Dessert name</label>
@@ -410,12 +410,7 @@
             >
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              id="editDessertModalBtn"
-              onclick="postDessert(document.getElementById('editDessertName').value,  document.getElementById('editDessertIngredients').value, document.getElementById('editDessertDescription').value, document.getElementById('editDessertBakeryID').value)"
-            >
+            <button type="button" class="btn btn-info" id="editDessertModalBtn">
               Edit dessert
             </button>
           </div>
@@ -549,7 +544,7 @@
             </button>
           </div>
           <div class="modal-body" id="editEmployeeModalBody">
-            <form class="form-example" action="" method="post">
+            <form class="form-example" action="" method="put">
               <!-- Input fields -->
               <div class="form-group">
                 <label for="editEmployeeRole">Employee role</label>

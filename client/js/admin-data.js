@@ -3,7 +3,28 @@ const xhttp = new XMLHttpRequest();
 let employeeBeingEdited = -1;
 let employeeModalBtnListenersAdded = false;
 
+let bakeryBeingEdited = -1;
+let bakeryModalBtnListenersAdded = false;
+
+let dessertBeingEdited = -1;
+let dessertModalBtnListenersAdded = false;
+
 // ---------------------------------------BAKERIES--------------------------------------------
+async function getBakery(value) {
+  let bakeryName = "";
+  const result = await fetch(endPointRoot + "/bakery/?id=" + value)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      bakeryName = res[0].bakeryName;
+      return res[0].bakeryName;
+    });
+  return bakeryName;
+}
+
 function getBakeries() {
   (async () => {
     let result = await fetch(endPointRoot + "/bakery")
@@ -31,11 +52,38 @@ function getBakeries() {
         for (let i = 0; i < res.length; i++) {
           generateBakery(res[i]);
         }
+
+        function editBakery() {
+          putBakery(
+            bakeryBeingEdited,
+            document.getElementById("editBakeryName").value,
+            document.getElementById("editBakeryLocation").value,
+            document.getElementById("editBakeryManager").value,
+            document.getElementById("editBakeryDescription").value
+          );
+          let text = document.createElement("H1");
+          text.innerHTML = "The bakery was edited.";
+          let bakeryModal = document.getElementById("editBakeryModalBody");
+          bakeryModal.append(text);
+
+          setTimeout(function () {
+            document.getElementById("editBakeryName").value = "";
+            document.getElementById("editBakeryLocation").value = "";
+            document.getElementById("editBakeryManager").value = "";
+            document.getElementById("editBakeryDescription").value = "";
+            text.innerHTML = "";
+          }, 3000);
+        }
+
+        if (!bakeryModalBtnListenersAdded) {
+          document
+            .getElementById("editBakeryModalBtn")
+            .addEventListener("click", editBakery);
+          bakeryModalBtnListenersAdded = true;
+        }
       });
   })();
 }
-
-function addBakery() {}
 
 function generateBakery(bakeryObj) {
   let outerDiv = document.getElementById("outerDiv");
@@ -73,8 +121,12 @@ function generateBakery(bakeryObj) {
   bakeryDescription.innerHTML = bakeryObj.bakeryDescription;
   editBakeryBtn.innerHTML = "Edit bakery";
   deleteBakeryBtn.innerHTML = "Delete bakery";
+
   editBakeryBtn.setAttribute("data-toggle", "modal");
   editBakeryBtn.setAttribute("data-target", "#editBakeryModal");
+  editBakeryBtn.addEventListener("click", function () {
+    bakeryBeingEdited = bakeryObj.bakeryID;
+  });
   deleteBakeryBtn.addEventListener("click", function () {
     deleteRequest("Bakery", bakeryObj.bakeryID).then(() => {
       bakeryObj = null;
@@ -96,9 +148,24 @@ function generateBakery(bakeryObj) {
   document.getElementById("container").appendChild(div);
 }
 
-function editBakery() {}
-
-function deleteBakery() {}
+async function putBakery(bakeryID, name, location, manager, description) {
+  let result = fetch(endPointRoot + "/bakery", {
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      bakeryID: bakeryID,
+      name: name,
+      location: location,
+      manager: manager,
+      description: description,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      getBakeries();
+      return res.json();
+    }
+  });
+}
 
 // ---------------------------------------DESSERTS--------------------------------------------
 function getDesserts() {
@@ -127,23 +194,38 @@ function getDesserts() {
         for (let i = 0; i < res.length; i++) {
           generateDessert(res[i]);
         }
+
+        function editDessert() {
+          putDessert(
+            dessertBeingEdited,
+            document.getElementById("editDessertName").value,
+            document.getElementById("editDessertIngredients").value,
+            document.getElementById("editDessertDescription").value,
+            document.getElementById("editDessertBakeryID").value
+          );
+
+          let text = document.createElement("H1");
+          text.innerHTML = "The dessert was edited.";
+          let dessertModal = document.getElementById("editDessertModalBody");
+          dessertModal.append(text);
+
+          setTimeout(function () {
+            document.getElementById("editDessertName").value = "";
+            document.getElementById("editDessertIngredients").value = "";
+            document.getElementById("editDessertDescription").value = "";
+            document.getElementById("editDessertBakeryID").value = "";
+            text.innerHTML = "";
+          }, 3000);
+        }
+
+        if (!dessertModalBtnListenersAdded) {
+          document
+            .getElementById("editDessertModalBtn")
+            .addEventListener("click", editDessert);
+          dessertModalBtnListenersAdded = true;
+        }
       });
   })();
-}
-
-async function getBakery(value) {
-  let bakeryName = "";
-  const result = await fetch(endPointRoot + "/bakery/?id=" + value)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((res) => {
-      bakeryName = res[0].bakeryName;
-      return res[0].bakeryName;
-    });
-  return bakeryName;
 }
 
 function generateDessert(dessertObj) {
@@ -179,6 +261,10 @@ function generateDessert(dessertObj) {
   editDessertBtn.setAttribute("style", "margin-right: 8px");
   editDessertBtn.setAttribute("data-toggle", "modal");
   editDessertBtn.setAttribute("data-target", "#editDessertModal");
+
+  editDessertBtn.addEventListener("click", function () {
+    dessertBeingEdited = dessertObj.dessertID;
+  });
   deleteDessertBtn.setAttribute("class", "btn btn-outline-danger");
   deleteDessertBtn.addEventListener("click", function () {
     deleteRequest("Dessert", dessertObj.dessertID).then(() => {
@@ -212,6 +298,25 @@ function generateDessert(dessertObj) {
   dessertFooter.appendChild(deleteDessertBtn);
 
   document.getElementById("container").appendChild(div);
+}
+
+async function putDessert(dessertID, name, ingredients, description, bakeryID) {
+  let result = fetch(endPointRoot + "/dessert", {
+    method: "put",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      dessertID: dessertID,
+      name: name,
+      ingredients: ingredients,
+      description: description,
+      bakeryID: bakeryID,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      getDesserts();
+      return res.json();
+    }
+  });
 }
 
 // ---------------------------------------EMPLOYEES--------------------------------------------
@@ -268,7 +373,9 @@ function getEmployees() {
         }
 
         if (!employeeModalBtnListenersAdded) {
-          editEmployeeModalBtn.addEventListener("click", editEmployee);
+          document
+            .getElementById("editEmployeeModalBtn")
+            .addEventListener("click", editEmployee);
           employeeModalBtnListenersAdded = true;
         }
       });
@@ -345,21 +452,6 @@ function generateEmployee(employeeObj) {
   document.getElementById("container").appendChild(div);
 }
 
-async function deleteRequest(type, id) {
-  let result = await fetch(endPointRoot + "/" + type, {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      type: type,
-      id: id,
-    }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-  });
-}
-
 async function putEmployee(
   id,
   firstName,
@@ -382,6 +474,22 @@ async function putEmployee(
   }).then((res) => {
     if (res.ok) {
       getEmployees();
+      return res.json();
+    }
+  });
+}
+
+// UNIVERSAL ---------------------------------- DELETE ALL ---------------------------------------------
+async function deleteRequest(type, id) {
+  let result = await fetch(endPointRoot + "/" + type, {
+    method: "delete",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: type,
+      id: id,
+    }),
+  }).then((res) => {
+    if (res.ok) {
       return res.json();
     }
   });
