@@ -8,6 +8,7 @@ const port = process.env.PORT || 8888;
 const dbPass = "CqVQzWZcaqNM";
 const sqlBakery = "SELECT * FROM `Bakery` Order BY bakeryName ASC";
 const sqlBakeryItem = "SELECT * FROM `Bakery` WHERE bakeryID = ";
+const sqlUserItem= "SELECT * FROM `Users` WHERE userName = ";
 const sqlEmployees = "SELECT * FROM `Employees` Order BY lastName ASC";
 const sqlEmployeesItem = "SELECT * FROM `Employees` WHERE employeeID = ";
 const sqlDessert = "SELECT * FROM `Dessert` Order BY dessertName ASC";
@@ -104,6 +105,27 @@ app.get(endPointRoot + "/employee", (req, res) => {
     }
 });
 
+// GET user
+app.get(endPointRoot + "/user", (req, res) => {
+    let q = url.parse(req.url, true);
+    let sql = sqlUserItem + "'" + q.query["username"] + "'";
+
+    db.query(sql, function (err, result, fields) {
+        if (err) throw err;
+        res.json(result);
+    });
+
+    // GET stat query
+    db.query(GET_stat_increment_root + "'" + endPointRoot + "/user'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+
+   
+    
+});
+
 /**
  * -------------------------------------------------------
  * Post Requests start here, These are all the requests
@@ -182,6 +204,32 @@ app.post(endPointRoot + "/employee", (req, res) => {
     });
 });
 
+//INSERT INTO Users (userName, uPassword, email, isAdmin) VALUES ('ashergum', 'password', 'ashergum@gmail.com', true)
+
+// POST User
+app.post(endPointRoot + "/user", (req, res) => {
+    let userName = req.body.userName;
+    let uPassword = req.body.password;
+    let email = req.body.email;
+    let isAdmin = req.body.isAdmin;
+
+    let sql = "INSERT INTO Users (userName, uPassword, email, isAdmin) VALUES ('" 
+        + userName + "', '" + uPassword + "', '" + email + "', '" + isAdmin + "' );";
+        
+    db.query(sql, (err, result) => { 
+        if (err) {
+            throw err;
+        }
+        res.json(result);
+    });
+    // Post stat query
+    db.query(POST_stat_increment_root + "'" + endPointRoot + "/user'" , (err, result) => {
+        if (err) {
+            throw err;
+        } 
+    });
+});
+
 /**
  * -------------------------------------------------------
  * PUT Requests start here, These are all the requests
@@ -219,7 +267,7 @@ app.put(endPointRoot + "/dessert", (req, res) => {
     let ingredients = req.body.ingredients;
     let description = req.body.description;
     let bakeryID = req.body.bakeryID;
-    let sql = "UPDATE dessert SET dessertName = '" + name + "', dessertIngredients = '" + ingredients 
+    let sql = "UPDATE Dessert SET dessertName = '" + name + "', dessertIngredients = '" + ingredients 
         + "', bakeryID = '" + bakeryID + "', dessertDescription = '" + description + "' WHERE dessertID = " + id + ";";
     db.query(sql, (err, result) => {
     if (err) {
