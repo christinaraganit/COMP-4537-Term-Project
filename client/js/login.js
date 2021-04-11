@@ -35,7 +35,15 @@ async function login(userName, password) {
         }
       })
       .then((res) => {
-          
+          if(password == res[0].uPassword){
+              //login
+
+              if(res[0].isAdmin == 1){
+                //admin
+              } else {
+                //client
+              }
+          }
       });
 
   }
