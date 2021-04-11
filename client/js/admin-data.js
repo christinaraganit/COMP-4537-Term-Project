@@ -9,6 +9,8 @@ let bakeryModalBtnListenersAdded = false;
 let dessertBeingEdited = -1;
 let dessertModalBtnListenersAdded = false;
 
+let allBakeries = {};
+
 function logout() {
   window.location.href =
     "https://christinaraganit.live/comp4537/termproject/API/V1/login.html";
@@ -30,6 +32,48 @@ async function getBakery(value) {
   return bakeryName;
 }
 
+async function getBakeryDictionary() {
+  const result = await fetch(endPointRoot + "/bakery")
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        allBakeries[res[i].bakeryID] = res[i].bakeryName;
+      }
+      console.log(allBakeries);
+    });
+  console.log(allBakeries);
+}
+
+function viewBakeries() {
+  let outerDiv = document.getElementById("outerDiv");
+  outerDiv.setAttribute(
+    "class",
+    "row h-25 justify-content-center align-items-center"
+  );
+
+  document.getElementById("container").innerHTML = "";
+
+  let bakeryTitle = document.createElement("h2");
+  bakeryTitle.setAttribute("class", "text-primary font-weight-bold");
+  bakeryTitle.innerHTML = "Bakeries";
+
+  let button = document.createElement("BUTTON");
+  button.innerHTML = "Add new bakery";
+  button.setAttribute("class", "w-100 btn btn-outline-primary");
+  button.setAttribute("style", "margin-bottom: 24px");
+  button.setAttribute("data-toggle", "modal");
+  button.setAttribute("data-target", "#addBakeryModal");
+
+  document.getElementById("container").appendChild(bakeryTitle);
+  document.getElementById("container").appendChild(button);
+
+  getBakeries();
+}
+
 function getBakeries() {
   (async () => {
     let result = await fetch(endPointRoot + "/bakery")
@@ -39,21 +83,6 @@ function getBakeries() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-
-        let bakeryTitle = document.createElement("h2");
-        bakeryTitle.setAttribute("class", "text-primary font-weight-bold");
-        bakeryTitle.innerHTML = "Bakeries";
-
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new bakery";
-        button.setAttribute("class", "w-100 btn btn-outline-primary");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addBakeryModal");
-
-        document.getElementById("container").appendChild(bakeryTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateBakery(res[i]);
         }
@@ -91,12 +120,6 @@ function getBakeries() {
 }
 
 function generateBakery(bakeryObj) {
-  let outerDiv = document.getElementById("outerDiv");
-  outerDiv.setAttribute(
-    "class",
-    "row h-25 justify-content-center align-items-center"
-  );
-
   let bakeryContainer = document.createElement("div");
   let div = document.createElement("div");
   let bakeryInfo = document.createElement("div");
@@ -173,6 +196,63 @@ async function putBakery(bakeryID, name, location, manager, description) {
 }
 
 // ---------------------------------------DESSERTS--------------------------------------------
+function viewDesserts() {
+  getBakeryDictionary();
+
+  let outerDiv = document.getElementById("outerDiv");
+  outerDiv.setAttribute(
+    "class",
+    "row h-25 justify-content-center align-items-center"
+  );
+
+  document.getElementById("container").innerHTML = "";
+  let dessertTitle = document.createElement("h2");
+  dessertTitle.setAttribute("class", "text-info font-weight-bold");
+  dessertTitle.innerHTML = "Desserts";
+
+  let button = document.createElement("BUTTON");
+  button.innerHTML = "Add new dessert";
+  button.setAttribute("class", "w-100 btn btn-outline-info");
+  button.setAttribute("style", "margin-bottom: 24px");
+  button.setAttribute("data-toggle", "modal");
+  button.setAttribute("data-target", "#addDessertModal");
+
+  let dessertBakeryId = document.getElementById("dessertBakeryID");
+  let editDessertBakeryId = document.getElementById("editDessertBakeryID");
+  let employeeBakeryId = document.getElementById("employeeBakeryID");
+  let editEmployeeBakeryId = document.getElementById("editEmployeeBakeryID");
+
+  dessertBakeryId.innerHTML = "";
+  editDessertBakeryId.innerHTML = "";
+  employeeBakeryId.innerHTML = "";
+  editEmployeeBakeryId.innerHTML = "";
+
+  for (bakery in allBakeries) {
+    console.log(allBakeries[bakery]);
+    console.log(bakery);
+
+    let option = document.createElement("option");
+    option.innerHTML = allBakeries[bakery];
+    option.setAttribute("value", bakery);
+
+    console.log(option);
+
+    dessertBakeryId.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    editDessertBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    employeeBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    editEmployeeBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+  }
+
+  document.getElementById("container").appendChild(dessertTitle);
+  document.getElementById("container").appendChild(button);
+
+  getDesserts();
+}
+
 function getDesserts() {
   (async () => {
     let result = await fetch(endPointRoot + "/dessert")
@@ -182,20 +262,6 @@ function getDesserts() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-        let dessertTitle = document.createElement("h2");
-        dessertTitle.setAttribute("class", "text-info font-weight-bold");
-        dessertTitle.innerHTML = "Desserts";
-
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new dessert";
-        button.setAttribute("class", "w-100 btn btn-outline-info");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addDessertModal");
-
-        document.getElementById("container").appendChild(dessertTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateDessert(res[i]);
         }
@@ -234,6 +300,8 @@ function getDesserts() {
 }
 
 function generateDessert(dessertObj) {
+  getBakeryDictionary();
+
   let outerDiv = document.getElementById("outerDiv");
   outerDiv.setAttribute(
     "class",
@@ -325,6 +393,64 @@ async function putDessert(dessertID, name, ingredients, description, bakeryID) {
 }
 
 // ---------------------------------------EMPLOYEES--------------------------------------------
+function viewEmployees() {
+  getBakeryDictionary();
+
+  let outerDiv = document.getElementById("outerDiv");
+  outerDiv.setAttribute(
+    "class",
+    "row h-25 justify-content-center align-items-center"
+  );
+
+  document.getElementById("container").innerHTML = "";
+
+  let employeeTitle = document.createElement("h2");
+  employeeTitle.setAttribute("class", "text-success font-weight-bold");
+  employeeTitle.innerHTML = "Employees";
+
+  let button = document.createElement("BUTTON");
+  button.innerHTML = "Add new employee";
+  button.setAttribute("class", "w-100 btn btn-outline-success");
+  button.setAttribute("style", "margin-bottom: 24px");
+  button.setAttribute("data-toggle", "modal");
+  button.setAttribute("data-target", "#addEmployeeModal");
+
+  let dessertBakeryId = document.getElementById("dessertBakeryID");
+  let editDessertBakeryId = document.getElementById("editDessertBakeryID");
+  let employeeBakeryId = document.getElementById("employeeBakeryID");
+  let editEmployeeBakeryId = document.getElementById("editEmployeeBakeryID");
+
+  dessertBakeryId.innerHTML = "";
+  editDessertBakeryId.innerHTML = "";
+  employeeBakeryId.innerHTML = "";
+  editEmployeeBakeryId.innerHTML = "";
+
+  for (bakery in allBakeries) {
+    console.log(allBakeries[bakery]);
+    console.log(bakery);
+
+    let option = document.createElement("option");
+    option.innerHTML = allBakeries[bakery];
+    option.setAttribute("value", bakery);
+
+    console.log(option);
+
+    dessertBakeryId.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    editDessertBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    employeeBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+    editEmployeeBakeryId.innerHTML.innerHTML +=
+      "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
+  }
+
+  document.getElementById("container").appendChild(employeeTitle);
+  document.getElementById("container").appendChild(button);
+
+  getEmployees();
+}
+
 function getEmployees() {
   (async () => {
     let result = await fetch(endPointRoot + "/employee")
@@ -334,21 +460,6 @@ function getEmployees() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-
-        let employeeTitle = document.createElement("h2");
-        employeeTitle.setAttribute("class", "text-success font-weight-bold");
-        employeeTitle.innerHTML = "Employees";
-
-        let button = document.createElement("BUTTON");
-        button.innerHTML = "Add new employee";
-        button.setAttribute("class", "w-100 btn btn-outline-success");
-        button.setAttribute("style", "margin-bottom: 24px");
-        button.setAttribute("data-toggle", "modal");
-        button.setAttribute("data-target", "#addEmployeeModal");
-
-        document.getElementById("container").appendChild(employeeTitle);
-        document.getElementById("container").appendChild(button);
         for (let i = 0; i < res.length; i++) {
           generateEmployee(res[i]);
         }
@@ -388,6 +499,8 @@ function getEmployees() {
 }
 
 function generateEmployee(employeeObj) {
+  getBakeryDictionary();
+
   let outerDiv = document.getElementById("outerDiv");
   outerDiv.setAttribute(
     "class",

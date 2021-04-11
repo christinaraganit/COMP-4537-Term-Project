@@ -33,7 +33,7 @@
     <title>Admin - Home</title>
   </head>
 
-  <body class="h-100">
+  <body class="h-100" onload="getBakeryDictionary()">
     <div class="container h-100">
       <div
         id="outerDiv"
@@ -41,16 +41,20 @@
       >
         <div>
           <!-- Buttons-->
-          <button type="button" class="btn btn-primary" onclick="getBakeries()">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="viewBakeries()"
+          >
             View bakeries
           </button>
-          <button type="button" class="btn btn-info" onclick="getDesserts()">
+          <button type="button" class="btn btn-info" onclick="viewDesserts()">
             View desserts
           </button>
           <button
             type="button"
             class="btn btn-success"
-            onclick="getEmployees()"
+            onclick="viewEmployees()"
           >
             View employees
           </button>
@@ -304,13 +308,9 @@
               </div>
               <div class="form-group">
                 <label for="dessertBakeryID">Bakery availability</label>
-                <input
-                  type="number"
-                  class="form-control dessertBakeryID"
-                  id="dessertBakeryID"
-                  placeholder="Bakery availability"
-                  name="dessertBakeryID"
-                />
+                <div class="input-group mb-3">
+                  <select class="custom-select" id="dessertBakeryID"></select>
+                </div>
               </div>
             </form>
           </div>
@@ -392,13 +392,12 @@
               </div>
               <div class="form-group">
                 <label for="editDessertBakeryID">Bakery availability</label>
-                <input
-                  type="number"
-                  class="form-control editDessertBakeryID"
-                  id="editDessertBakeryID"
-                  placeholder="Bakery availability"
-                  name="editDessertBakeryID"
-                />
+                <div class="input-group mb-3">
+                  <select class="custom-select" id="editDessertBakeryID">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                  </select>
+                </div>
               </div>
             </form>
           </div>
@@ -477,13 +476,12 @@
               </div>
               <div class="form-group">
                 <label for="employeeBakeryID">Bakery working at</label>
-                <input
-                  type="number"
-                  class="form-control employeeBakeryID"
-                  id="employeeBakeryID"
-                  placeholder="Bakery availability"
-                  name="employeeBakeryID"
-                />
+                <select class="custom-select" id="employeeBakeryID">
+                  <!-- <option selected>Choose...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option> -->
+                </select>
               </div>
               <div class="form-group">
                 <label for="editEmployeeDescription"
@@ -578,13 +576,12 @@
               </div>
               <div class="form-group">
                 <label for="editEmployeeBakeryID">Bakery working at</label>
-                <input
-                  type="number"
-                  class="form-control editEmployeeBakeryID"
-                  id="editEmployeeBakeryID"
-                  placeholder="Bakery availability"
-                  name="editEmployeeBakeryID"
-                />
+                <div class="input-group mb-3">
+                  <select
+                    class="custom-select"
+                    id="editEmployeeBakeryID"
+                  ></select>
+                </div>
               </div>
               <div class="form-group">
                 <label for="editEmployeeDescription"

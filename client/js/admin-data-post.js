@@ -24,6 +24,7 @@ function postBakery(name, location, manager, description) {
         text.innerHTML = "The bakery was added.";
         let bakeryModal = document.getElementById("bakeryModal");
         bakeryModal.append(text);
+
         const delay = (ms) => new Promise((res) => setTimeout(res, ms));
         const yourFunction = async () => {
           await delay(2000);
