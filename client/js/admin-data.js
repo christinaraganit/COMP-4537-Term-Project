@@ -49,13 +49,12 @@ async function getBakeryDictionary() {
 }
 
 function viewBakeries() {
+  document.getElementById("container").innerHTML = "";
   let outerDiv = document.getElementById("outerDiv");
   outerDiv.setAttribute(
     "class",
     "row h-25 justify-content-center align-items-center"
   );
-
-  document.getElementById("container").innerHTML = "";
 
   let bakeryTitle = document.createElement("h2");
   bakeryTitle.setAttribute("class", "text-primary font-weight-bold");
@@ -83,8 +82,6 @@ function getBakeries() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-
         for (let i = 0; i < res.length; i++) {
           generateBakery(res[i]);
         }
@@ -161,6 +158,20 @@ function generateBakery(bakeryObj) {
     deleteRequest("Bakery", bakeryObj.bakeryID).then(() => {
       bakeryObj = null;
       document.getElementById("container").innerHTML = "";
+      let employeeTitle = document.createElement("h2");
+      employeeTitle.setAttribute("class", "text-primary font-weight-bold");
+      employeeTitle.innerHTML = "Bakery";
+
+      let button = document.createElement("BUTTON");
+      button.innerHTML = "Add new bakery";
+      button.setAttribute("class", "w-100 btn btn-outline-primary");
+      button.setAttribute("style", "margin-bottom: 24px");
+      button.setAttribute("data-toggle", "modal");
+      button.setAttribute("data-target", "#addBakeryModal");
+
+      document.getElementById("container").appendChild(employeeTitle);
+      document.getElementById("container").appendChild(button);
+
       getBakeries();
     });
   });
@@ -255,8 +266,6 @@ function getDesserts() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-
         for (let i = 0; i < res.length; i++) {
           generateDessert(res[i]);
         }
@@ -337,6 +346,20 @@ function generateDessert(dessertObj) {
   deleteDessertBtn.addEventListener("click", function () {
     deleteRequest("Dessert", dessertObj.dessertID).then(() => {
       document.getElementById("container").innerHTML = "";
+      let employeeTitle = document.createElement("h2");
+      employeeTitle.setAttribute("class", "text-info font-weight-bold");
+      employeeTitle.innerHTML = "Desserts";
+
+      let button = document.createElement("BUTTON");
+      button.innerHTML = "Add new employee";
+      button.setAttribute("class", "w-100 btn btn-outline-info");
+      button.setAttribute("style", "margin-bottom: 24px");
+      button.setAttribute("data-toggle", "modal");
+      button.setAttribute("data-target", "#addDessertModal");
+
+      document.getElementById("container").appendChild(employeeTitle);
+      document.getElementById("container").appendChild(button);
+
       getDesserts();
     });
   });
@@ -389,6 +412,7 @@ async function putDessert(dessertID, name, ingredients, description, bakeryID) {
 
 // ---------------------------------------EMPLOYEES--------------------------------------------
 function viewEmployees() {
+  document.getElementById("container").innerHTML = "";
   getBakeryDictionary();
 
   let outerDiv = document.getElementById("outerDiv");
@@ -409,6 +433,9 @@ function viewEmployees() {
   button.setAttribute("style", "margin-bottom: 24px");
   button.setAttribute("data-toggle", "modal");
   button.setAttribute("data-target", "#addEmployeeModal");
+
+  document.getElementById("container").appendChild(employeeTitle);
+  document.getElementById("container").appendChild(button);
 
   let dessertBakeryId = document.getElementById("dessertBakeryID");
   let editDessertBakeryId = document.getElementById("editDessertBakeryID");
@@ -431,9 +458,6 @@ function viewEmployees() {
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
   }
 
-  document.getElementById("container").appendChild(employeeTitle);
-  document.getElementById("container").appendChild(button);
-
   getEmployees();
 }
 
@@ -446,8 +470,6 @@ function getEmployees() {
         }
       })
       .then((res) => {
-        document.getElementById("container").innerHTML = "";
-
         for (let i = 0; i < res.length; i++) {
           generateEmployee(res[i]);
         }
@@ -539,6 +561,20 @@ function generateEmployee(employeeObj) {
   deleteEmployeeBtn.addEventListener("click", function () {
     deleteRequest("Employee", employeeObj.employeeID).then(() => {
       document.getElementById("container").innerHTML = "";
+      let employeeTitle = document.createElement("h2");
+      employeeTitle.setAttribute("class", "text-success font-weight-bold");
+      employeeTitle.innerHTML = "Employees";
+
+      let button = document.createElement("BUTTON");
+      button.innerHTML = "Add new employee";
+      button.setAttribute("class", "w-100 btn btn-outline-success");
+      button.setAttribute("style", "margin-bottom: 24px");
+      button.setAttribute("data-toggle", "modal");
+      button.setAttribute("data-target", "#addEmployeeModal");
+
+      document.getElementById("container").appendChild(employeeTitle);
+      document.getElementById("container").appendChild(button);
+
       getEmployees();
     });
   });

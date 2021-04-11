@@ -325,7 +325,7 @@
             <button
               type="button"
               class="btn btn-info"
-              onclick="postDessert(document.getElementById('dessertName').value,  document.getElementById('dessertIngredients').value, document.getElementById('dessertDescription').value, document.getElementById('dessertBakeryID').value)"
+              onclick="postDessert(document.getElementById('dessertName').value,  document.getElementById('dessertIngredients').value, document.getElementById('dessertDescription').value, document.getElementById('dessertBakeryID').options[document.getElementById('dessertBakeryID').selectedIndex].value)"
             >
               Add dessert
             </button>
@@ -476,12 +476,7 @@
               </div>
               <div class="form-group">
                 <label for="employeeBakeryID">Bakery working at</label>
-                <select class="custom-select" id="employeeBakeryID">
-                  <!-- <option selected>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option> -->
-                </select>
+                <select class="custom-select" id="employeeBakeryID"></select>
               </div>
               <div class="form-group">
                 <label for="editEmployeeDescription"
@@ -508,7 +503,7 @@
             <button
               type="button"
               class="btn btn-success"
-              onclick="postEmployee(document.getElementById('employeeFirstName').value, document.getElementById('employeeLastName').value, document.getElementById('employeeDescription').value, document.getElementById('employeeRole').value, document.getElementById('employeeBakeryID').value)"
+              onclick="postEmployee(document.getElementById('employeeFirstName').value, document.getElementById('employeeLastName').value, document.getElementById('employeeDescription').value, document.getElementById('employeeRole').value, document.getElementById('employeeBakeryID').options[document.getElementById('employeeBakeryID').selectedIndex].value)"
             >
               Add employee
             </button>
