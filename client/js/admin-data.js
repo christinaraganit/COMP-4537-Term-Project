@@ -83,6 +83,8 @@ function getBakeries() {
         }
       })
       .then((res) => {
+        document.getElementById("container").innerHTML = "";
+
         for (let i = 0; i < res.length; i++) {
           generateBakery(res[i]);
         }
@@ -228,22 +230,13 @@ function viewDesserts() {
   editEmployeeBakeryId.innerHTML = "";
 
   for (bakery in allBakeries) {
-    console.log(allBakeries[bakery]);
-    console.log(bakery);
-
-    let option = document.createElement("option");
-    option.innerHTML = allBakeries[bakery];
-    option.setAttribute("value", bakery);
-
-    console.log(option);
-
     dessertBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    editDessertBakeryId.innerHTML.innerHTML +=
+    editDessertBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    employeeBakeryId.innerHTML.innerHTML +=
+    employeeBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    editEmployeeBakeryId.innerHTML.innerHTML +=
+    editEmployeeBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
   }
 
@@ -262,6 +255,8 @@ function getDesserts() {
         }
       })
       .then((res) => {
+        document.getElementById("container").innerHTML = "";
+
         for (let i = 0; i < res.length; i++) {
           generateDessert(res[i]);
         }
@@ -426,22 +421,13 @@ function viewEmployees() {
   editEmployeeBakeryId.innerHTML = "";
 
   for (bakery in allBakeries) {
-    console.log(allBakeries[bakery]);
-    console.log(bakery);
-
-    let option = document.createElement("option");
-    option.innerHTML = allBakeries[bakery];
-    option.setAttribute("value", bakery);
-
-    console.log(option);
-
     dessertBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    editDessertBakeryId.innerHTML.innerHTML +=
+    editDessertBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    employeeBakeryId.innerHTML.innerHTML +=
+    employeeBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
-    editEmployeeBakeryId.innerHTML.innerHTML +=
+    editEmployeeBakeryId.innerHTML +=
       "<option value='" + bakery + "'>" + allBakeries[bakery] + "</option>";
   }
 
@@ -460,6 +446,8 @@ function getEmployees() {
         }
       })
       .then((res) => {
+        document.getElementById("container").innerHTML = "";
+
         for (let i = 0; i < res.length; i++) {
           generateEmployee(res[i]);
         }
