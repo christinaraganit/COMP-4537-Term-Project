@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/login.css" />
 
     <!-- CSS -->
     <link
@@ -45,7 +44,7 @@
               <input
                 type="text"
                 class="form-control username"
-                id="username"
+                id="userUsername"
                 placeholder="Username"
                 name="username"
               />
@@ -55,7 +54,7 @@
               <input
                 type="text"
                 class="form-control email"
-                id="email"
+                id="userEmail"
                 placeholder="Email"
                 name="email"
               />
@@ -65,18 +64,40 @@
               <input
                 type="password"
                 class="form-control password"
-                id="password"
+                id="userPassword"
                 placeholder="Password"
                 name="password"
               />
             </div>
-            <button type="submit" class="w-100 btn btn-primary">Login</button>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck1"
+              />
+              <label
+                class="form-check-label"
+                id="userIsAdmin"
+                for="defaultCheck1"
+              >
+                Are you an admin?
+              </label>
+            </div>
+            <br />
           </form>
+          <button
+            type="submit"
+            class="w-100 btn btn-primary"
+            id="signupBtn"
+            onclick="signUp(document.getElementById('userUsername').value, document.getElementById('userPassword').value, document.getElementById('userEmail').value, document.getElementById('defaultCheck1').checked?1:0)"
+          >
+            Sign up
+          </button>
           <!-- Form end -->
         </div>
       </div>
     </div>
-
     <script src="js/login.js"></script>
   </body>
 </html>

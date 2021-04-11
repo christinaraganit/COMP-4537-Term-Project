@@ -1,6 +1,11 @@
 const endPointRoot = "https://ashergum.com/Comp4537/termproject/API/V1";
 const xhttp = new XMLHttpRequest();
 
+function logout() {
+  window.location.href =
+    "https://christinaraganit.live/comp4537/termproject/API/V1/login.html";
+}
+
 // ---------------------------------------BAKERIES--------------------------------------------
 function getBakeries() {
   (async () => {

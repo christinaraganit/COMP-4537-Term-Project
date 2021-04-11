@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/login.css" />
 
     <!-- CSS -->
     <link
@@ -45,7 +44,7 @@
               <input
                 type="text"
                 class="form-control username"
-                id="username"
+                id="userUsername"
                 placeholder="Username"
                 name="username"
               />
@@ -55,14 +54,27 @@
               <input
                 type="password"
                 class="form-control password"
-                id="password"
+                id="userPassword"
                 placeholder="Password"
                 name="password"
               />
             </div>
-            <button type="submit" class="w-100 btn btn-primary">Login</button>
           </form>
           <!-- Form end -->
+          <button
+            type="submit"
+            class="w-100 btn btn-primary"
+            onclick="login(document.getElementById('userUsername').value, document.getElementById('userPassword').value)"
+          >
+            Login
+          </button>
+
+          <br />
+          <a
+            href="https://christinaraganit.live/comp4537/termproject/API/V1/signup.html"
+            >Not a user? Sign up.</a
+          >
+          <p id="errorMessage"></p>
         </div>
       </div>
     </div>

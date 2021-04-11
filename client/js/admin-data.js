@@ -9,6 +9,11 @@ let bakeryModalBtnListenersAdded = false;
 let dessertBeingEdited = -1;
 let dessertModalBtnListenersAdded = false;
 
+function logout() {
+  window.location.href =
+    "https://christinaraganit.live/comp4537/termproject/API/V1/login.html";
+}
+
 // ---------------------------------------BAKERIES--------------------------------------------
 async function getBakery(value) {
   let bakeryName = "";
