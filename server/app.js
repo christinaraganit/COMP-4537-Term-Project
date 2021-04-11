@@ -204,7 +204,6 @@ app.post(endPointRoot + "/employee", (req, res) => {
     });
 });
 
-//INSERT INTO Users (userName, uPassword, email, isAdmin) VALUES ('ashergum', 'password', 'ashergum@gmail.com', true)
 
 // POST User
 app.post(endPointRoot + "/user", (req, res) => {
@@ -420,10 +419,6 @@ function getItem(res, type, id){
     });
 
 }
-
-// insert function
-//let sql = INSERT INTO `Dessert`(`dessertName`, `dessertIngredients`, `dessertDescription`, `bakeryID`) 
-
 
 app.listen(port, () => {
     console.log(`listening on port: ${port}`);
